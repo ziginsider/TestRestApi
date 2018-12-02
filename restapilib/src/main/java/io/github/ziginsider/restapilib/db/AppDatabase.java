@@ -12,16 +12,17 @@ import io.github.ziginsider.restapilib.db.entity.User;
 @Database(entities = {User.class, FavoriteGifs.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public static AppDatabase INSTANCE;
+    private static volatile AppDatabase INSTANCE;
+    private static final String NAME = "libraryDatabase";
 
     public abstract UserDao userModel();
 
     public abstract GifsDao gifsModel();
 
-    public static AppDatabase getInMemoryDatabase(Context context) {
+    public static AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE =
-                    Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+                    Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, NAME)
                             .build();
         }
         return INSTANCE;

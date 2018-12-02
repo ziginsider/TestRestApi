@@ -12,7 +12,7 @@ import java.util.List;
 public class GifsConverter {
 
     @TypeConverter
-    public String fromListOfGifs(List<Gif> gifs) {
+    public static String fromListOfGifs(List<Gif> gifs) {
         if (gifs == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class GifsConverter {
     }
 
     @TypeConverter
-    public List<Gif> toGifsList(String json) {
+    public static List<Gif> toGifsList(String json) {
         if (json == null) {
             return null;
         }
