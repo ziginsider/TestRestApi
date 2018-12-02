@@ -2,7 +2,7 @@ package io.github.ziginsider.restapilib.model.gifs;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ImageSet {
+class ImageSet {
 
     @SerializedName("fixed_height")
     private Image fixed_height;

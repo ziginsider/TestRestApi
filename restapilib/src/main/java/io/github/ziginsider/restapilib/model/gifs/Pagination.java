@@ -2,7 +2,7 @@ package io.github.ziginsider.restapilib.model.gifs;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Pagination {
+class Pagination {
 
     @SerializedName("total_count")
     private int total_count;

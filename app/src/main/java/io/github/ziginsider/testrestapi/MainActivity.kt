@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
 
-        textView.text = RandomUserClient().user
+        RandomUserClient.getInstance().populateUsers(textView)
+
+
     }
 }

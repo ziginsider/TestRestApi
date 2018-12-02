@@ -2,7 +2,7 @@ package io.github.ziginsider.restapilib.model.gifs;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Meta {
+class Meta {
 
     @SerializedName("status")
     private int status;

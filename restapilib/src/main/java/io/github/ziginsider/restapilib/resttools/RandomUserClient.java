@@ -22,10 +22,12 @@ import java.io.File;
 
 public class RandomUserClient {
 
+    private static RandomUserClient instance = null;
+
     private Retrofit retrofit;
     private RandomUsersApi randomUsersApi;
 
-    public RandomUserClient() {
+    private RandomUserClient() {
 
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
 
@@ -66,15 +68,18 @@ public class RandomUserClient {
         randomUsersApi = retrofit.create(RandomUsersApi.class);
     }
 
+
+
     public void populateUsers(final TextView textView) {
         Call<RandomUsers> randomUsersCall = getRandomUserService().getRandomUsers(10);
         randomUsersCall.enqueue(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, @NonNull Response<RandomUsers> response) {
                 if(response.isSuccessful()) {
-                    String result = response.body().getResults().get(0).toString();
+                    String result = response.body().getResults().get(1).toString();
                     Log.d("TAGTAG", result);
                     textView.append(result);
+                    textView.postInvalidate();
                 }
             }
 
@@ -89,4 +94,10 @@ public class RandomUserClient {
         return randomUsersApi;
     }
 
+    public static synchronized RandomUserClient getInstance() {
+        if (instance == null) {
+            instance = new RandomUserClient();
+        }
+        return instance;
+    }
 }

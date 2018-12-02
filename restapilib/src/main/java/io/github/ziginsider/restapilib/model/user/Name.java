@@ -3,7 +3,7 @@ package io.github.ziginsider.restapilib.model.user;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Name {
+class Name {
 
     @SerializedName("title")
     @Expose
