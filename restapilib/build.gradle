@@ -27,4 +27,8 @@ dependencies {
 
     // Log
     implementation 'com.jakewharton.timber:timber:4.6.0'
+
+    // Room
+    implementation "androidx.room:room-runtime:2.1.0-alpha02"
+    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha02"
 }

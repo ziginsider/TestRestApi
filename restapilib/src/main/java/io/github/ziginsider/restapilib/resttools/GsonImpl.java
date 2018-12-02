@@ -3,7 +3,7 @@ package io.github.ziginsider.restapilib.resttools;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-class GsonImpl {
+public class GsonImpl {
 
     private static GsonImpl instance;
     private Gson gson;
@@ -20,7 +20,7 @@ class GsonImpl {
         return instance;
     }
 
-    Gson getGson() {
+    public Gson getGson() {
         return gson;
     }
 }
