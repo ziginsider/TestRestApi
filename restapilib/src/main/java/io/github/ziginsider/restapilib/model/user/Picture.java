@@ -1,20 +1,16 @@
 package io.github.ziginsider.restapilib.model.user;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 class Picture {
 
     @SerializedName("large")
-    @Expose
     private String large;
 
     @SerializedName("medium")
-    @Expose
     private String medium;
 
     @SerializedName("thumbnail")
-    @Expose
     private String thumbnail;
 
     public String getLarge() {

@@ -1,20 +1,16 @@
 package io.github.ziginsider.restapilib.model.user;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 class Name {
 
     @SerializedName("title")
-    @Expose
     private String title;
 
     @SerializedName("first")
-    @Expose
     private String first;
 
     @SerializedName("last")
-    @Expose
     private String last;
 
     public String getTitle() {

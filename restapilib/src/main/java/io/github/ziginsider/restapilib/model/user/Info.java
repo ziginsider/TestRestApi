@@ -1,24 +1,19 @@
 package io.github.ziginsider.restapilib.model.user;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 class Info {
 
     @SerializedName("seed")
-    @Expose
     private String seed;
 
     @SerializedName("results")
-    @Expose
     private int results;
 
     @SerializedName("page")
-    @Expose
     private int page;
 
     @SerializedName("version")
-    @Expose
     private String version;
 
     public String getSeed() {

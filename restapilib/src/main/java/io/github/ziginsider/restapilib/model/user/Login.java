@@ -1,32 +1,25 @@
 package io.github.ziginsider.restapilib.model.user;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 class Login {
 
     @SerializedName("username")
-    @Expose
     private String username;
 
     @SerializedName("password")
-    @Expose
     private String password;
 
     @SerializedName("salt")
-    @Expose
     private String salt;
 
     @SerializedName("md5")
-    @Expose
     private String md5;
 
     @SerializedName("sha1")
-    @Expose
     private String sha1;
 
     @SerializedName("sha256")
-    @Expose
     private String sha256;
 
     public String getUsername() {
