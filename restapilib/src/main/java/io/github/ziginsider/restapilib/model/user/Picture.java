@@ -2,7 +2,7 @@ package io.github.ziginsider.restapilib.model.user;
 
 import com.google.gson.annotations.SerializedName;
 
-class Picture {
+public class Picture {
 
     @SerializedName("large")
     private String large;

@@ -1,9 +1,10 @@
 package io.github.ziginsider.restapilib.resttools;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.TextView;
+import io.github.ziginsider.restapilib.db.AppDatabase;
+import io.github.ziginsider.restapilib.db.entity.User;
 import io.github.ziginsider.restapilib.model.user.RandomUsers;
+import io.github.ziginsider.restapilib.model.user.Result;
 import io.github.ziginsider.restapilib.restapi.RandomUsersApi;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,9 +13,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-public class RandomUserClient {
+import java.util.List;
+
+class RandomUserClient {
 
     private static RandomUserClient instance;
+    private static final int ONE_USER_COUNT = 1;
 
     private RandomUsersApi randomUsersApi;
 
@@ -29,16 +33,14 @@ public class RandomUserClient {
         randomUsersApi = retrofit.create(RandomUsersApi.class);
     }
 
-    public void populateUsers(final TextView textView) {
-        Call<RandomUsers> randomUsersCall = getRandomUserService().getRandomUsers(10);
+    public void populateUsers(final AppDatabase db, final User rawUser) {
+        Call<RandomUsers> randomUsersCall = getRandomUserService().getRandomUsers(ONE_USER_COUNT);
         randomUsersCall.enqueue(new Callback<RandomUsers>() {
             @Override
             public void onResponse(Call<RandomUsers> call, @NonNull Response<RandomUsers> response) {
-                if(response.isSuccessful()) {
-                    String result = response.body().getResults().get(1).toString();
-                    Log.d("TAGTAG", result);
-                    textView.append(result);
-                    textView.postInvalidate();
+                if (response.isSuccessful()) {
+                    List<Result> result = response.body().getResults();
+                    db.userModel().insertUser(createUser(result.get(0), rawUser));
                 }
             }
 
@@ -49,7 +51,20 @@ public class RandomUserClient {
         });
     }
 
-    private RandomUsersApi getRandomUserService(){
+    private User createUser(Result result, User rawUser) {
+        rawUser.gender = result.getGender();
+        rawUser.name = result.getName().getFirst();
+        rawUser.lastname = result.getName().getLast();
+        rawUser.city = result.getLocation().getCity();
+        rawUser.street = result.getLocation().getStreet();
+        rawUser.postcode = result.getLocation().getPostcode();
+        rawUser.email = result.getEmail();
+        rawUser.phone = result.getPhone();
+        rawUser.photoUrl = result.getPicture().getMedium();
+        return rawUser;
+    }
+
+    private RandomUsersApi getRandomUserService() {
         return randomUsersApi;
     }
 
