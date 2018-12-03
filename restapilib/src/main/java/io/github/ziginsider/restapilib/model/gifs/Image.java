@@ -2,7 +2,7 @@ package io.github.ziginsider.restapilib.model.gifs;
 
 import com.google.gson.annotations.SerializedName;
 
-class Image {
+public class Image {
 
     @SerializedName("url")
     private String url;

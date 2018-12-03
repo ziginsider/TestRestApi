@@ -1,13 +1,13 @@
 package io.github.ziginsider.restapilib.db.dao;
 
-import androidx.room.*;
+import android.arch.persistence.room.*;
 import io.github.ziginsider.restapilib.db.entity.FavoriteGifs;
 import io.github.ziginsider.restapilib.db.entity.GifsConverter;
 
 import java.util.List;
 
-import static androidx.room.OnConflictStrategy.IGNORE;
-import static androidx.room.OnConflictStrategy.REPLACE;
+import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 @TypeConverters(GifsConverter.class)

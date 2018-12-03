@@ -1,6 +1,6 @@
 package io.github.ziginsider.restapilib.db.entity;
 
-import androidx.room.TypeConverter;
+import android.arch.persistence.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.github.ziginsider.restapilib.model.gifs.Gif;
