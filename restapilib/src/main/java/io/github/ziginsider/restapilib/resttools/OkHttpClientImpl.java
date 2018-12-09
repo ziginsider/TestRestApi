@@ -1,9 +1,7 @@
 package io.github.ziginsider.restapilib.resttools;
 
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import okhttp3.*;
-import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +12,16 @@ import java.util.List;
 
 class OkHttpClientImpl {
 
+    // 10 Mb
+    private final int CASH_SIZE = 10 * 1000 * 1000;
+
     interface StateCallListener {
         void setElapsedTime(String elapsedTime);
         void setBodyByteCount(String bodyByteCount);
     }
 
-    private static OkHttpClientImpl instance;
-    private OkHttpClient okHttpClient;
+    private static OkHttpClientImpl mInstance;
+    private OkHttpClient mOkHttpClient;
 
     private OkHttpClientImpl(StateCallListener stateCallListener) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -29,37 +30,26 @@ class OkHttpClientImpl {
         cacheFile.mkdirs();
 
         // 10 Mb
-        Cache cache = new Cache(cacheFile, 10 * 1000 * 1000);
+        Cache cache = new Cache(cacheFile, CASH_SIZE);
 
         Timber.plant(new Timber.DebugTree());
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new
-                HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(@NonNull String message) {
-                Timber.i(message);
-            }
-        });
-
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        okHttpClient = new OkHttpClient()
+        mOkHttpClient = new OkHttpClient()
                 .newBuilder()
                 .cache(cache)
-                .addInterceptor(httpLoggingInterceptor)
                 .eventListener(new PrintingEventListener(stateCallListener))
                 .build();
     }
 
-    public static synchronized OkHttpClientImpl getInstance(StateCallListener stateCallListener) {
-        if (instance == null) {
-            instance = new OkHttpClientImpl(stateCallListener);
+    static synchronized OkHttpClientImpl getInstance(StateCallListener stateCallListener) {
+        if (mInstance == null) {
+            mInstance = new OkHttpClientImpl(stateCallListener);
         }
-        return instance;
+        return mInstance;
     }
 
     OkHttpClient getOkHttpClient() {
-        return okHttpClient;
+        return mOkHttpClient;
     }
 
     private static final class PrintingEventListener extends EventListener {

@@ -13,7 +13,7 @@ import io.github.ziginsider.restapilib.db.entity.User;
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
-    private static final String NAME = "libraryDbNew";
+    private static final String NAME = "libraryRestDb";
 
     public abstract UserDao userModel();
 
@@ -23,7 +23,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             INSTANCE =
                     Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, NAME)
-                            .allowMainThreadQueries()
+                            //.allowMainThreadQueries()
                             .build();
         }
         return INSTANCE;

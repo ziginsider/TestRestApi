@@ -12,29 +12,28 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-import static io.github.ziginsider.restapilib.restapi.SearchGifsContract.API_KEY;
-import static io.github.ziginsider.restapilib.restapi.SearchGifsContract.LIMIT_SEARCH_QUERY;
-
 class SearchGifsClient {
-    private static SearchGifsClient instance;
-
-    private SearchGifsApi searchGifsApi;
+    private static final int LIMIT_SEARCH_QUERY = 9;
+    private static final String API_KEY = "rKV5x4vFsIfFQCfaQb4cUNEUnLrD9MoV";
+    private static final String BASE_URL = "http://api.giphy.com/";
+    private static SearchGifsClient mInstance;
+    private SearchGifsApi mSearchGifsApi;
 
     private SearchGifsClient(OkHttpClientImpl.StateCallListener stateCallListener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(OkHttpClientImpl.getInstance(stateCallListener).getOkHttpClient())
-                .baseUrl("http://api.giphy.com/")
-                .addConverterFactory(GsonConverterFactory.create(GsonImpl.getInstance().getGson()))
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(GsonImpl.getInstance().getmGson()))
                 .build();
 
-        searchGifsApi = retrofit.create(SearchGifsApi.class);
+        mSearchGifsApi = retrofit.create(SearchGifsApi.class);
     }
 
     void populateGifsResult(String query, final GifsDao gifsDao, final FavoriteGifs rawFavoriteGifs) {
         Call<SearchData> gifsCall = getSearchGifsService().getSearchGifs(query, LIMIT_SEARCH_QUERY, API_KEY);
         gifsCall.enqueue(new Callback<SearchData>() {
             @Override
-            public void onResponse(Call<SearchData> call, @NonNull Response<SearchData> response) {
+            public void onResponse(@NonNull Call<SearchData> call, @NonNull Response<SearchData> response) {
                 if (response.isSuccessful()) {
                     rawFavoriteGifs.gifs = response.body().getData();
                     saveGifsToDb(gifsDao, rawFavoriteGifs);
@@ -42,7 +41,7 @@ class SearchGifsClient {
             }
 
             @Override
-            public void onFailure(Call<SearchData> call, Throwable t) {
+            public void onFailure(@NonNull Call<SearchData> call, Throwable t) {
                 Timber.i(t.getMessage());
             }
         });
@@ -58,13 +57,13 @@ class SearchGifsClient {
     }
 
     private SearchGifsApi getSearchGifsService() {
-        return searchGifsApi;
+        return mSearchGifsApi;
     }
 
     public static synchronized SearchGifsClient getInstance(OkHttpClientImpl.StateCallListener stateCallListener) {
-        if (instance == null) {
-            instance = new SearchGifsClient(stateCallListener);
+        if (mInstance == null) {
+            mInstance = new SearchGifsClient(stateCallListener);
         }
-        return instance;
+        return mInstance;
     }
 }

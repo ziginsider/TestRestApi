@@ -16,7 +16,7 @@ public class GifsConverter {
         if (gifs == null) {
             return null;
         }
-        Gson gson = GsonImpl.getInstance().getGson();
+        Gson gson = GsonImpl.getInstance().getmGson();
         Type type = new TypeToken<List<Gif>>() {}.getType();
         String json = gson.toJson(gifs, type);
         return json;
@@ -27,7 +27,7 @@ public class GifsConverter {
         if (json == null) {
             return null;
         }
-        Gson gson = GsonImpl.getInstance().getGson();
+        Gson gson = GsonImpl.getInstance().getmGson();
         Type type = new TypeToken<List<Gif>>() {}.getType();
         List<Gif> gifs = gson.fromJson(json, type);
         return gifs;

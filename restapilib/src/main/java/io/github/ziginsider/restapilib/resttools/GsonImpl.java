@@ -5,22 +5,22 @@ import com.google.gson.GsonBuilder;
 
 public class GsonImpl {
 
-    private static GsonImpl instance;
-    private Gson gson;
+    private static GsonImpl mInstance;
+    private Gson mGson;
 
     private GsonImpl() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gson = gsonBuilder.create();
+        mGson = gsonBuilder.create();
     }
 
     public static synchronized GsonImpl getInstance() {
-        if (instance == null) {
-            instance = new GsonImpl();
+        if (mInstance == null) {
+            mInstance = new GsonImpl();
         }
-        return instance;
+        return mInstance;
     }
 
-    public Gson getGson() {
-        return gson;
+    public Gson getmGson() {
+        return mGson;
     }
 }

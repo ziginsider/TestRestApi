@@ -13,6 +13,9 @@ public class Result {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("dob")
+    private Dob dob;
+
     @SerializedName("phone")
     private String phone;
 
@@ -90,6 +93,14 @@ public class Result {
 
     public void setNat(String nat) {
         this.nat = nat;
+    }
+
+    public Dob getDob() {
+        return dob;
+    }
+
+    public void setDob(Dob dob) {
+        this.dob = dob;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package io.github.ziginsider.restapilib.db.dao;
 
 import android.arch.persistence.room.*;
+import io.github.ziginsider.restapilib.db.entity.DateConverter;
 import io.github.ziginsider.restapilib.db.entity.FavoriteGifs;
 import io.github.ziginsider.restapilib.db.entity.GifsConverter;
 
@@ -10,7 +11,7 @@ import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
-@TypeConverters(GifsConverter.class)
+@TypeConverters({GifsConverter.class, DateConverter.class})
 public interface GifsDao {
 
     @Query("SELECT * FROM favorite_gifs WHERE id = :id")

@@ -7,6 +7,6 @@ import retrofit2.http.Query;
 
 public interface RandomUsersApi {
 
-    @GET("api/?exc=location,login,dob,registered")
+    @GET("api/?exc=location,login,registered")
     Call<RandomUsers> getRandomUsers(@Query("results") int count);
 }

@@ -5,9 +5,17 @@ data class UserWithGifsModel(
     val name: String,
     val lastName: String,
     val gender: String,
+    val age: Int,
+    val birth: String,
     val email: String,
     val phone: String,
     val gifOneUrl: String,
     val gifTwoUrl: String,
-    val gifTreeUrl: String
+    val gifTreeUrl: String,
+    val gifFourUrl: String,
+    val gifFiveUrl: String,
+    val gifSixUrl: String,
+    val gifSevenUrl: String,
+    val gifEightUrl: String,
+    val gifNineUrl: String
 )

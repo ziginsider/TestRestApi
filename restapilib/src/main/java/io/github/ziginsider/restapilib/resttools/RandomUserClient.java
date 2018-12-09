@@ -17,20 +17,19 @@ import java.util.List;
 
 class RandomUserClient {
 
-    private static RandomUserClient instance;
     private static final int ONE_USER_COUNT = 1;
-
-    private RandomUsersApi randomUsersApi;
+    private static final String BASE_URL = "https://randomuser.me/";
+    private static RandomUserClient mInstance;
+    private RandomUsersApi mRandomUsersApi;
 
     private RandomUserClient(OkHttpClientImpl.StateCallListener stateCallListener) {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .client(OkHttpClientImpl.getInstance(stateCallListener).getOkHttpClient())
-                .baseUrl("https://randomuser.me/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(GsonImpl.getInstance().getmGson()))
                 .build();
 
-        randomUsersApi = retrofit.create(RandomUsersApi.class);
+        mRandomUsersApi = retrofit.create(RandomUsersApi.class);
     }
 
     void populateUsers(final UserDao userDao, final User rawUser) {
@@ -39,17 +38,13 @@ class RandomUserClient {
             @Override
             public void onResponse(@NonNull Call<RandomUsers> call, @NonNull Response<RandomUsers> response) {
                 if (response.isSuccessful()) {
-                Timber.i("SUCCESS<<<<<<<<<<<<<<");
                 List<Result> result = response.body().getResults();
                     saveUserToDb(userDao, createUser(result.get(0), rawUser));
-                    //userDao.insertUser(createUser(result.get(0), rawUser));
-                    //Timber.i("SUCCESS>>>>>>>>>>>>>>>>>>");
                }
             }
 
             @Override
             public void onFailure(@NonNull Call<RandomUsers> call, Throwable t) {
-                Timber.i("FAIL>>>>>>>>>>>>>>>>>>");
                 Timber.i(t.getMessage());
             }
         });
@@ -75,13 +70,13 @@ class RandomUserClient {
     }
 
     private RandomUsersApi getRandomUserService() {
-        return randomUsersApi;
+        return mRandomUsersApi;
     }
 
     static synchronized RandomUserClient getInstance(OkHttpClientImpl.StateCallListener stateCallListener) {
-        if (instance == null) {
-            instance = new RandomUserClient(stateCallListener);
+        if (mInstance == null) {
+            mInstance = new RandomUserClient(stateCallListener);
         }
-        return instance;
+        return mInstance;
     }
 }
