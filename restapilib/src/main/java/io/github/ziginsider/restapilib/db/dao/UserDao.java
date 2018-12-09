@@ -3,6 +3,7 @@ package io.github.ziginsider.restapilib.db.dao;
 import android.arch.persistence.room.*;
 import io.github.ziginsider.restapilib.db.entity.DateConverter;
 import io.github.ziginsider.restapilib.db.entity.User;
+
 import java.util.List;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;

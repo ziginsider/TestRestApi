@@ -44,11 +44,13 @@ class RecyclerViewAdapter(@LayoutRes private val layoutResId: Int) :
         private val userEmail: TextView = itemView.findViewById(R.id.userEmail)
         private val userPhone: TextView = itemView.findViewById(R.id.userPhone)
         private val userGender: TextView = itemView.findViewById(R.id.userGender)
+        private val userDate: TextView = itemView.findViewById(R.id.userDate)
 
         private val requestBuilder = Glide.with(itemView.context)
 
         @SuppressLint("SetTextI18n")
         fun bind(user: UserWithGifsModel) {
+            val birth = user.birth.split("T")[0]
             requestBuilder.load(user.photoUrl).into(avatar)
             requestBuilder.load(user.gifOneUrl).into(gif1)
             requestBuilder.load(user.gifTwoUrl).into(gif2)
@@ -59,13 +61,14 @@ class RecyclerViewAdapter(@LayoutRes private val layoutResId: Int) :
             requestBuilder.load(user.gifSevenUrl).into(gif7)
             requestBuilder.load(user.gifEightUrl).into(gif8)
             requestBuilder.load(user.gifNineUrl).into(gif9)
-            userName.text = "Name: ${user.name}"
-            userLastName.text = "Last name: ${user.lastName}"
+            userName.text = "Name: ${user.name.capitalize()}"
+            userLastName.text = "Last name: ${user.lastName.capitalize()}"
             userAge.text = "Age: ${user.age}"
-            userAge.text = "Birth: ${user.birth}"
+            userBirth.text = "Birth: $birth"
             userEmail.text = "Email: ${user.email}"
             userPhone.text = "Phone: ${user.phone}"
             userGender.text = "Gender: ${user.gender}"
+            userDate.text = "Register: ${user.date}"
         }
     }
 }

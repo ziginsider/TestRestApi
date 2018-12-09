@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
+import java.util.Date;
 import java.util.List;
 
 class RandomUserClient {
@@ -38,9 +39,9 @@ class RandomUserClient {
             @Override
             public void onResponse(@NonNull Call<RandomUsers> call, @NonNull Response<RandomUsers> response) {
                 if (response.isSuccessful()) {
-                List<Result> result = response.body().getResults();
+                    List<Result> result = response.body().getResults();
                     saveUserToDb(userDao, createUser(result.get(0), rawUser));
-               }
+                }
             }
 
             @Override
@@ -63,9 +64,12 @@ class RandomUserClient {
         rawUser.gender = result.getGender();
         rawUser.name = result.getName().getFirst();
         rawUser.lastname = result.getName().getLast();
+        rawUser.age = result.getDob().getAge();
+        rawUser.birth = result.getDob().getDate();
         rawUser.email = result.getEmail();
         rawUser.phone = result.getPhone();
         rawUser.photoUrl = result.getPicture().getMedium();
+        rawUser.date = new Date();
         return rawUser;
     }
 

@@ -7,6 +7,11 @@ import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
+/**
+ * The description table of Random User for {@link io.github.ziginsider.restapilib.db.AppDatabase}
+ *
+ * @author Aliaksei Kisel
+ */
 @Entity(tableName = "users")
 @TypeConverters(DateConverter.class)
 public class User {
@@ -35,5 +40,6 @@ public class User {
     @ColumnInfo(name = "photo_url")
     public String photoUrl;
 
+    // Date of record creation
     public Date date;
 }
